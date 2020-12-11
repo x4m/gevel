@@ -1657,7 +1657,7 @@ btree_deep_search(Relation rel, int level,
 				btreeIdxInfo->idxStat.numinvalidtuple++;
 
 			itup = (IndexTuple) PageGetItem(page, iid);
-			cblk = BTreeInnerTupleGetDownLink(itup);
+			cblk = BTreeTupleGetDownLink(itup);
 
 			btree_deep_search(rel, level + 1, cblk, btreeIdxInfo, cond);
 		}
@@ -2001,7 +2001,7 @@ btree_print(PG_FUNCTION_ARGS)
 
 	if (!P_ISLEAF(opaque))
 	{
-		BlockNumber blk = BTreeInnerTupleGetDownLink(ituple);
+		BlockNumber blk = BTreeTupleGetDownLink(ituple);
 		openBtPPage(funcctx, blk );
 	}
 
